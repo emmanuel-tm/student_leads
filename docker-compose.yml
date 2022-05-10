@@ -1,0 +1,60 @@
+version: "3.3"
+
+# Declaro los servicios a utilizar dentro del ecosistema de Docker:
+services:
+  db:
+    # Este servicio crea una base de datos de tipo Postgres.
+    image: postgres:13.2
+    container_name: edmachina_database
+    restart: always
+    volumes:
+      # Aquí se enlaza el contenido de dentro del contenedor con el directorio en nuestra PC
+      # de esa manera lo que guardemos en la base de datos va a quedar accesible en nuestra carpeta.
+      # host:container
+      - ./database:/var/lib/postgresql/data
+
+    environment:
+      # Para Postgres definimos las siguientes variables de 
+      # entorno, correspondiente a las credenciales.
+      POSTGRES_DB: edmachina_db
+      POSTGRES_USER: edmachina_user
+      POSTGRES_PASSWORD: 123edmachina
+    ports:
+      # Enlazamos el puerto en el que trabaja Postgres --> 5432
+      # host:container
+      - 5432:5432
+
+  adminer:
+    # Una interfaz para monitoreo y gestión de nuestra base de datos.
+    # Se puede acceder a ella en localhost:8080
+    container_name: edmachina_adminer
+    image: adminer:4.8.0
+    restart: always
+    ports:
+      - 8080:8080
+    # indicamos que este servicio depende de que primero inicie "db".
+    depends_on: ["db"]
+
+  edmachina_django:
+    # En caso de no encontrar la imagen la construyo desde el Dockerfile:
+    build: .
+    # Nombre de la imagen a utilizar:
+    image: edmachina_djangoimg
+    # Nombre del container:
+    container_name: ed_machina
+    # Que se reinice siempre ante fallos y al iniciar el sistema:
+    restart: always
+    # Bindeamos/enlazamos la carpeta del host con el container:
+    volumes:
+      # Source code directory:
+      - type: bind
+        source: .
+        target: /opt/backend   # Indicamos la carpeta donde va a estar enlazado el container.
+    # Puertos enlazados: - "host:container"
+    ports:
+        - "8000:8000"
+    # Control de consola:
+    stdin_open: true
+    tty: true
+    # indicamos que este servicio depende de que primero inicie "db".
+    depends_on: ["db"]

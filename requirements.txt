@@ -1,0 +1,8 @@
+# Librerías de 3ros:
+Django==3.2.2
+requests==2.25.1
+django-filter==2.4.0
+djangorestframework==3.12.4
+django-rest-auth==0.9.5
+# Driver para trabajar con el motor de Postgres:
+psycopg2-binary>=2.8
