@@ -41,7 +41,7 @@ services:
     # Nombre de la imagen a utilizar:
     image: edmachina_djangoimg
     # Nombre del container:
-    container_name: ed_machina
+    container_name: edmachina_panel
     # Que se reinice siempre ante fallos y al iniciar el sistema:
     restart: always
     # Bindeamos/enlazamos la carpeta del host con el container:
