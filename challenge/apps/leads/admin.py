@@ -10,3 +10,7 @@ class StudentAdmin(admin.ModelAdmin):
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(Career)
+class CareerAdmin(admin.ModelAdmin):
+    pass
