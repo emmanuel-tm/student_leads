@@ -17,7 +17,24 @@ class Student(models.Model):
 
     class Meta:
         # Modifico el nombre de la tabla/entidad.
-        db_table = 'Students'
+        db_table = 'students'
 
     def __str__(self):
         return f'Student ID: {self.id} - File Number: {self.file_number}'
+
+
+class Course(models.Model):
+    id = models.BigAutoField(db_column='ID', primary_key=True)
+    course_name = models.CharField(verbose_name='name', 
+                            max_length=128, blank=False)
+    course_duration = models.PositiveSmallIntegerField(verbose_name='duration',
+                                                        blank=False)
+    passed = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f'{self.course_name} - {self.id}'
+
+
+    class Meta:
+        db_table = 'courses'

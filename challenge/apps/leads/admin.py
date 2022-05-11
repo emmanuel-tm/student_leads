@@ -6,3 +6,7 @@ from apps.leads.models import *
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    pass
